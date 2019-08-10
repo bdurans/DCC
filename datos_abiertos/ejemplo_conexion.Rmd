@@ -10,7 +10,7 @@ output:
     toc_float:
       collapsed: no
 editor_options:
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -25,6 +25,8 @@ library(lubridate)
 library(kableExtra)
 library(jsonlite)
 library(stringr)
+library(feather)
+library(GGally)
 ```
 
 # **Datos**
@@ -58,8 +60,19 @@ En el momento que queramos obtener todos los datos, podemos usar el argumento
 guid_tabla <- "LICIT-ADJUD-DE-LAS-INSTI"
 
 # Llamar la tabla. Usamos las mismas credenciales que habíamos usado
-licitaciones <- get_data(base_url = url_base, api_key = api_key,
-                         guid = guid_tabla, stream = "unlimited")
+# licitaciones <- get_data(base_url = url_base, api_key = api_key,
+#                          guid = guid_tabla)
+
+licitaciones <- feather::read_feather("licitaciones.feather")
+summary(licitaciones)
+
+head(licitaciones)
+
+hist(licitaciones$ano)
+
+
+
+ggpairs(licitaciones)
 ```
 
 # Estructura datos
